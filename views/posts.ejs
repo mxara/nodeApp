@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Express</title>
+</head>
+<body>
+    <%- include('blocks/header') -%>
+    <main>
+        <ul>
+            <% if (posts.length) { %>
+                <% posts.forEach(({ id, title, createdAt, text, author }) => { %>
+                    <li>
+                        <article>
+                            <div class="info">
+                                <h2>
+                                    <a href="/posts/<%= id %>"><%= title %></a>
+                                    <button class="btn-delete" data-id="<%= id %>">
+                                        <i class="fa-regular fa-trash-can" data-id="<%= id %>"></i>
+                                    </button>
+                                </h2>
+                                <p><%= text %></p>
+                                <span><%= createdAt.toLocaleDateString() %></span>
+                                <span><%= author %></span>
+                            </div>
+                        </article>
+                    </li>
+                <% }) %>
+            <% } %>
+        </ul>
+    </main>
+
+    <script>
+        document.addEventListener("click", (e) => {
+            const id = e.target?.dataset?.id
+            if (id) {
+                console.log("322323")
+                fetch(`/posts/${id}`, {
+                    method: "DELETE",
+                }).then(() => {
+                    window.location.href = "/posts"
+                })
+            }
+        })
+    </script>
+</body>
