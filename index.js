@@ -6,14 +6,14 @@ const methodOverride = require('method-override');
 const postRoutes = require("./routes/post-routes");
 const postApiRoutes = require("./routes/api-post-routes")
 const contactsRoutes = require("./routes/contacts-routes");
-require("dotenv").config();
 
 const app = express()
+const db = "mongodb+srv://new-user:Pass321@cluster0.ukknj.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=Cluster0"
 
 // ------------------------------ DATABASE -----------------------------
 
 mongoose 
-    .connect(process.env.MONGO_UTL, { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((res) => console.log("Connected to DB"))
     .catch((error) => console.log(error))
 
@@ -55,10 +55,12 @@ app.get('/user/:username', (req, res) => {
     res.render("user.ejs", data)
 }) // динамическое значение -- назначаем статичный URL адрес а после ставим двоеточее и после него ДИНАМИЧНОЕ значение которое меняеться в зависимости чего либо
 
+const PORT = 3000
+
 // --------------------- SERVER LAUNCHING ----------------------------------------
 
-app.listen(process.env.PORT, () => {
-    console.log(`server started http://localhost:${process.env.PORT}`)
+app.listen(PORT, () => {
+    console.log(`server started http://localhost:${PORT}`)
 }) // при запускe сервера
 
 // команда запуска сервера в терминале
